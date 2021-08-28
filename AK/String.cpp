@@ -1,6 +1,6 @@
 #include "String.h"
 
-usize strlen(char const *s)
+usize strlen(char const* s)
 {
     usize i = 0;
     while (*s++ != '\0')
@@ -17,7 +17,7 @@ void* memcpy(void* dst, void const* src, usize count)
     return (void*)dstArray;
 }
 
-String::String(char const *s)
+String::String(char const* s)
     : String(strlen(s))
 {
     m_length = strlen(s);
@@ -51,7 +51,7 @@ String& String::operator=(String const& other)
     return *this = String(other);
 }
 
-String::String(String&& other)
+String::String(String&& other) noexcept
 {
     m_capacity = other.m_capacity;
     m_length = other.m_length;
@@ -59,7 +59,7 @@ String::String(String&& other)
     other.m_data = nullptr;
 }
 
-String& String::operator=(String&& other)
+String& String::operator=(String&& other) noexcept
 {
     m_capacity = other.m_capacity;
     m_length = other.m_length;

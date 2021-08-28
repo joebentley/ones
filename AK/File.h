@@ -3,8 +3,8 @@
 
 class File {
 public:
-NON_COPYABLE(File);
-NON_MOVABLE(File);
+    NON_COPYABLE(File);
+    NON_MOVABLE(File);
 
 private:
 };
