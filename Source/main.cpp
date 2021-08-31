@@ -1,11 +1,16 @@
 #include "AK/Format.h"
+#include "NesFile.h"
 #include "SDL.h"
 
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
 
-int main()
+int main(int argc, char** argv)
 {
+    if (argc == 2) {
+        NesFile::from_file(String(argv[1]));
+    }
+
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         error("Could not initialise SDL: {}", SDL_GetError());
         return 1;

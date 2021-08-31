@@ -3,7 +3,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
 
-set(ones_sources main.cpp)
+set(ones_sources main.cpp NesFile.cpp NesFile.h ArgParser.cpp ArgParser.h)
 
 message(${SDL2_LIBRARIES})
 add_executable(ones ${ones_sources})
