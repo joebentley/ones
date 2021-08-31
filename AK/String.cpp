@@ -67,3 +67,14 @@ String& String::operator=(String&& other) noexcept
     other.m_data = nullptr;
     return *this;
 }
+Optional<char> String::get(usize i) const
+{
+    if (i >= m_length)
+        return {};
+    return Optional<char>(m_data[i]);
+}
+Vector<String> String::split(char sep) const
+{
+    //    for ()
+    return Vector<String>(0);
+}
