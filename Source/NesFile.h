@@ -1,6 +1,8 @@
 #pragma once
 #include "Types.h"
-#include "Vector.h"
+#include <vector>
+
+using std::vector;
 
 // Basic iNES header for now
 class NesFile {
@@ -17,6 +19,6 @@ private:
     u8 m_mapper;
 
     // Data
-    Vector<u8> m_prg_rom;
-    Vector<u8> m_chr_rom;
+    vector<u8> m_prg_rom;
+    vector<u8> m_chr_rom;
 };

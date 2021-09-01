@@ -1,12 +1,15 @@
 #pragma once
-#include "Optional.h"
-#include "String.h"
+#include <optional>
+#include <string>
+
+using std::optional;
+using std::string;
 
 class ArgParser {
 public:
-    static Optional<ArgParser> try_parse(String const& argv);
+    static optional<ArgParser> try_parse(string const& argv);
 
 private:
-    Optional<String> m_ines_file {};
+    optional<string> m_ines_file {};
     bool m_print_ines_info { false };
 };

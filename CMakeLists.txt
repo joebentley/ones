@@ -29,5 +29,4 @@ add_compile_options(-Wunused)
 add_compile_options(-Wwrite-strings)
 add_compile_options(-fno-exceptions)
 
-add_subdirectory(AK)
 add_subdirectory(Source)

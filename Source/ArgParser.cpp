@@ -1,7 +1,6 @@
 #include "ArgParser.h"
 
-Optional<ArgParser> ArgParser::try_parse(String const& argv)
+optional<ArgParser> ArgParser::try_parse(string const& argv)
 {
-
-    return Optional<ArgParser>();
+    return {};
 }
