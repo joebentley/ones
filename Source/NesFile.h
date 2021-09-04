@@ -1,24 +1,20 @@
 #pragma once
+#include "NesHeader.h"
 #include "Types.h"
+#include <istream>
+#include <memory>
+#include <optional>
 #include <vector>
 
-using std::vector;
-
-// Basic iNES header for now
+// Basic iNES file for now
 class NesFile {
 public:
+    static std::optional<NesFile> try_from_file(std::unique_ptr<std::istream>);
+
+    void print() { m_header.print(); }
 private:
-    // Header
-    u8 m_prg_rom_size; // in 16kB units, == m_prg_rom.length() / 16384
-    u8 m_chr_rom_size; // in 8kB units, == m_chr_rom.length() / 8192
+    NesHeader m_header;
 
-    bool m_vertical_mirror; // https://wiki.nesdev.com/w/index.php?title=Mirroring#Nametable_Mirroring
-    bool m_has_save;
-    bool m_has_trainer;
-    bool m_ignore_mirroring;
-    u8 m_mapper;
-
-    // Data
-    vector<u8> m_prg_rom;
-    vector<u8> m_chr_rom;
+    std::vector<u8> m_prg_rom;
+    std::vector<u8> m_chr_rom;
 };
