@@ -12,7 +12,7 @@ std::optional<ArgParser> ArgParser::try_parse(int argc, char** argv)
     for (int i = 1; i < argc; i++) {
         string_views.emplace_back(std::string_view(argv[i]));
     }
-    
+
     return try_parse(string_views);
 }
 
@@ -32,4 +32,9 @@ std::optional<ArgParser> ArgParser::try_parse(std::vector<std::string_view> cons
     }
 
     return parser;
+}
+
+void ArgParser::print_usage()
+{
+    fmt::print("usage: ones [--print-ines-info] <file>\n");
 }

@@ -11,8 +11,7 @@
 int main(int argc, char** argv)
 {
     if (argc == 1) {
-        // TODO: print usage here
-        fmt::print(stderr, "No arguments given\n");
+        ArgParser::print_usage();
         return 1;
     }
 
@@ -21,6 +20,7 @@ int main(int argc, char** argv)
     if (!optional_parser.has_value()) {
         // TODO: print usage here
         fmt::print(stderr, "Failed to parse arguments.\n");
+        ArgParser::print_usage();
         return 1;
     }
 
