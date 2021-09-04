@@ -18,7 +18,6 @@ int main(int argc, char** argv)
     auto optional_parser = ArgParser::try_parse(argc, argv);
 
     if (!optional_parser.has_value()) {
-        // TODO: print usage here
         fmt::print(stderr, "Failed to parse arguments.\n");
         ArgParser::print_usage();
         return 1;
