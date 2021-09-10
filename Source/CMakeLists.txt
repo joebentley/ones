@@ -3,7 +3,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
 
-set(ones_sources main.cpp NesFile.cpp NesFile.h ArgParser.cpp ArgParser.h Types.h NesFileParser.cpp NesFileParser.h NesHeader.h Processor.cpp Processor.h)
+set(ones_sources main.cpp NesFile.cpp NesFile.h ArgParser.cpp ArgParser.h Types.h NesFileParser.cpp NesFileParser.h NesHeader.h Processor.cpp Processor.h Mapper.cpp Mapper.h)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 

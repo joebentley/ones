@@ -1,11 +1,26 @@
 #pragma once
+#include "Mapper.h"
 #include "Types.h"
 #include <array>
 #include <bitset>
+#include <iterator>
+#include <ostream>
 
 class Processor {
 public:
+    explicit Processor(Mapper& mapper)
+        : m_mapper(mapper)
+    {
+    }
+
+    explicit Processor(Mapper& mapper, std::unique_ptr<std::ostream> log_file)
+        : m_mapper(mapper)
+        , m_log_file(std::move(log_file))
+    {
+    }
+
     void execute();
+    void reset();
 
     u8 take_byte();
     u8& get_byte(u16 address);
@@ -64,6 +79,14 @@ public:
     u8& pop_stack();
 
 private:
+    template<typename... Targs>
+    void log(fmt::format_string<Targs...> format, Targs&&... args)
+    {
+        if (m_log_file) {
+            fmt::format_to(std::ostream_iterator<char>(*m_log_file), format, args...);
+        }
+    }
+
     u16 m_pc { 0 };
     u8 m_ac { 0 };
     u8 m_x { 0 };
@@ -71,6 +94,12 @@ private:
     std::bitset<8> m_sr { 0b00110100 };
     u8 m_sp { 0 };
 
-    // TODO: this is probably mapper dependent
-    std::array<u8, 2048> m_ram {};
+    std::array<u8, 2048> m_pram {};
+    std::array<u8, 8> m_ppu_registers {};
+    std::array<u8, 18> m_apu_io_registers {};
+    std::array<u8, 8> m_unused_apu_io_functionality {};
+
+    Mapper& m_mapper;
+
+    std::unique_ptr<std::ostream> m_log_file;
 };

@@ -74,13 +74,13 @@ std::optional<NesHeader> NesFileParser::parse_header()
 
 std::optional<std::vector<u8>> NesFileParser::read_prg_rom(NesHeader const& header)
 {
-    std::istream::pos_type offset = header.m_has_trainer ? 512 : 0;
+    std::istream::pos_type offset = 16 + (header.m_has_trainer ? 512 : 0);
     RETURN_BYTES(offset, header.m_prg_rom_size * 16384)
 }
 
 std::optional<std::vector<u8>> NesFileParser::read_chr_rom(NesHeader const& header)
 {
-    std::istream::pos_type offset = header.m_has_trainer ? 512 : 0 + header.m_prg_rom_size * 16384;
+    std::istream::pos_type offset = 16 + (header.m_has_trainer ? 512 : 0) + header.m_prg_rom_size * 16384;
     RETURN_BYTES(offset, header.m_chr_rom_size * 8192)
 }
 

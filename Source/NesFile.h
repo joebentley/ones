@@ -12,6 +12,7 @@ public:
     static std::optional<NesFile> try_from_file(std::unique_ptr<std::istream>);
 
     void print() { m_header.print(); }
+
 private:
     NesHeader m_header;
 

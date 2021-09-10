@@ -26,7 +26,7 @@ std::optional<ArgParser> ArgParser::try_parse(std::vector<std::string_view> cons
         } else if (i == argv.size() - 1 && argv[i][0] != '-') {
             parser.m_ines_file.emplace(argv[i]);
         } else {
-            fmt::print(stderr, "Unrecognised or misplaced arg: {}", argv[i]);
+            fmt::print(stderr, "Unrecognised or misplaced arg: {}\n", argv[i]);
             return {};
         }
     }

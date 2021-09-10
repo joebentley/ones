@@ -23,6 +23,8 @@ inline bool check_lsb(u8 value)
 
 void Processor::execute()
 {
+    log("{:<6x}\n", m_pc);
+
     switch (take_byte()) {
     case 0x00: { // BRK impl
         push_stack(static_cast<u16>(m_pc + 1));
@@ -294,7 +296,7 @@ void Processor::execute()
         do_ror(m_ac);
         break;
     }
-    case 0x6C: { // JMP ind
+    case 0x6C: {      // JMP ind
         m_pc = ind(); // TODO: quite unsure about this
         break;
     }
@@ -682,9 +684,15 @@ void Processor::execute()
         break;
     }
     default:
-        fmt::print("Unrecognised opcode: {}", get_byte(m_pc - 1));
+        fmt::print("Unrecognised opcode: {:x}\n", get_byte(m_pc - 1));
         return;
     }
+}
+
+void Processor::reset()
+{
+    m_pc = get_byte(0xFFFC) + (get_byte(0xFFFD) << 8);
+    log("PC reset: {:x}\n", m_pc);
 }
 
 // TODO: decimal is not implemented
@@ -803,7 +811,6 @@ void Processor::do_ldy(u8 value)
     set_zero(m_y == 0);
 }
 
-
 void Processor::do_cmp(u8 value)
 {
     u8 result = m_ac - value;
@@ -849,8 +856,15 @@ u8 Processor::take_byte()
 
 u8& Processor::get_byte(u16 address)
 {
-    // TODO: map the memory
-    return m_ram[address];
+    if (address <= 0x1FFF)
+        return m_pram[address % 0x0800];
+    if (address <= 0x3FFF)
+        return m_ppu_registers[(address - 0x2000) % 8];
+    if (address <= 0x4017)
+        return m_apu_io_registers[address - 0x4000];
+    if (address <= 0x401F)
+        return m_unused_apu_io_functionality[address - 0x4018];
+    return *m_mapper.get_byte(address);
 }
 
 u8& Processor::abs()

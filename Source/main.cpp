@@ -1,5 +1,6 @@
 #include "ArgParser.h"
-#include "NesFile.h"
+#include "Mapper.h"
+#include "Processor.h"
 #include "SDL.h"
 #include "fmt/core.h"
 #include <cstdio>
@@ -37,17 +38,21 @@ int main(int argc, char** argv)
         return 1;
     }
 
-    auto nes_file = NesFile::try_from_file(std::move(fs));
+    auto mapper = Mapper::try_from_file(std::move(fs));
 
-    if (!nes_file.has_value()) {
-        fmt::print(stderr, "Could not read NES file");
+    if (!mapper) {
+        fmt::print(stderr, "Could not read NES file.\n");
         return 1;
     }
 
     if (arg_parser.should_print_ines_info()) {
-        nes_file.value().print();
+        mapper->print();
         return 0;
     }
+
+    auto log_fs = std::make_unique<std::ofstream>("cpu_log");
+    auto processor = Processor(*mapper, std::move(log_fs));
+    processor.reset();
 
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         fmt::print(stderr, "Could not initialise SDL: {}\n", SDL_GetError());
@@ -81,6 +86,8 @@ int main(int argc, char** argv)
                     quit = true;
             }
         }
+
+        processor.execute();
     }
 
     SDL_DestroyWindow(window);
