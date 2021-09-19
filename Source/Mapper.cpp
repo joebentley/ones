@@ -2,6 +2,7 @@
 #include "NesFileParser.h"
 #include <algorithm>
 #include <cassert>
+#include <cstdio>
 #include <fmt/core.h>
 
 std::unique_ptr<Mapper> Mapper::try_from_file(std::unique_ptr<std::istream> fs)
@@ -18,7 +19,7 @@ std::unique_ptr<Mapper> Mapper::try_from_file(std::unique_ptr<std::istream> fs)
         mapper = std::make_unique<NROMMapper>();
         break;
     default:
-        fmt::print("Mapper not implemented");
+        fmt::print(stderr, "Mapper {} not implemented.\n", header->m_mapper);
         return {};
     }
 
