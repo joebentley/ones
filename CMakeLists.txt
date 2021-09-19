@@ -29,5 +29,13 @@ add_compile_options(-Wunused)
 add_compile_options(-Wwrite-strings)
 add_compile_options(-fno-exceptions)
 
-add_subdirectory(Externals/fmt)
+include(FetchContent)
+
+# Formatting library, adds fmt::fmt
+FetchContent_Declare(
+  fmtlib
+  GIT_REPOSITORY https://github.com/fmtlib/fmt.git
+  GIT_TAG 8.0.1)
+FetchContent_MakeAvailable(fmtlib)
+
 add_subdirectory(Source)
